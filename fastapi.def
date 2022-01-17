@@ -1,0 +1,26 @@
+Bootstrap: docker
+From: python:3.8
+
+%labels
+    Author Nicholas A. Del Grosso
+    Title FastAPI in a Singularity Container
+    Hobby Discovering New, Ever-More Frustrating Compiler Errors
+
+%help
+    This is a demo container that has FastAPI set up and ready to run.
+
+%post
+    pip install -r requirements.txt
+
+%test
+    if python -V | grep -q 'Python 3.8'; then
+        echo "Python 3.8 detected"
+    else
+        echo "Python 3.8 not found."
+        echo python -V 
+        exit 1
+    fi
+
+%runscript
+    echo "Starting process"
+    uvicorn main:app --reload
